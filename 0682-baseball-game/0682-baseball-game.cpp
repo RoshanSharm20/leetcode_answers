@@ -28,7 +28,7 @@ public:
                 s.push(x);
             }
         }
-        while(s.size()!=0)
+        while(!s.empty())
         {
             total+=s.top();
             s.pop();
