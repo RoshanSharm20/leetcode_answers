@@ -34,10 +34,11 @@ public:
                 }
                 for(int i=0;i<(levelNodes.size()/2);++i)
                 {
-                    int x = levelNodes[i]->val;
-                    int y = levelNodes[levelNodes.size()-i-1]->val;
-                    levelNodes[i]->val = y;
-                    levelNodes[levelNodes.size()-i-1]->val = x;
+                    // int x = levelNodes[i]->val;
+                    // int y = levelNodes[levelNodes.size()-i-1]->val;
+                    // levelNodes[i]->val = y;
+                    // levelNodes[levelNodes.size()-i-1]->val = x;
+                    swap(levelNodes[i]->val,levelNodes[levelNodes.size()-i-1]->val);
                 }
             }
             else
