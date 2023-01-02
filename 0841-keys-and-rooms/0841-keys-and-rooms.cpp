@@ -2,20 +2,11 @@ class Solution {
 public:
     void bfs(int i, vector<vector<int>>&rooms, vector<int>&vis)
     {
-        vis[i] = 1;
-        queue<int> q;
-        q.push(i);
-        while(!q.empty())
+        vis[i]=1;
+        for(auto &keys:rooms[i])
         {
-            auto node = q.front();
-            q.pop();
-            for(auto &keys:rooms[node])
-            {
-                if(!vis[keys]){
-                vis[keys]= 1;
-                q.push(keys);
-                }
-            }
+            if(!vis[keys])
+            bfs(keys,rooms,vis);
         }
     }
     bool canVisitAllRooms(vector<vector<int>>& rooms) {
