@@ -9,7 +9,6 @@ public:
             s+=nums[i];
             int rem=s%k;
             if(rem<0) rem+=k;
-            rem=rem%k;
             if(m.count(rem))
             ans+=m[rem];
             m[rem]++;
