@@ -15,30 +15,33 @@ public:
     }
     int minPathSum(vector<vector<int>>& grid) 
     {
-        vector<vector<int>> dp(grid.size(),vector<int>(grid[0].size(),-1));
+        // vector<vector<int>> dp(grid.size(),vector<int>(grid[0].size(),-1));
         // return solution(grid.size()-1,grid[0].size()-1,grid,dp);
+        vector<int> prev(grid[0].size(),0);
         for(int i=0;i<grid.size();++i)
         {
+            vector<int> curr(grid[0].size(),0);
             for(int j=0;j<grid[0].size();++j)
             {
                 if(i==0 && j==0)
-                    dp[i][j]=grid[i][j];
+                    curr[j]=grid[i][j];
                 else
                 {
                     int up = grid[i][j];
                     if(i>0)
-                        up+=dp[i-1][j];
+                        up+=prev[j];
                     else
                         up+=10000;
                     int left = grid[i][j];
                     if(j>0)
-                        left+=dp[i][j-1];
+                        left+=curr[j-1];
                     else
                         left+=10000;
-                    dp[i][j]=min(up,left);
+                    curr[j]=min(up,left);
                 }
             }
+            prev=curr;
         }
-        return dp[grid.size()-1][grid[0].size()-1];
+        return prev[grid[0].size()-1];
     }
 };
