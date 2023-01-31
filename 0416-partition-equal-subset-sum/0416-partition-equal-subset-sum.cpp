@@ -20,7 +20,26 @@ public:
         if(sum%2!=0)
             return false;
         int target = sum/2;
-        vector<vector<int>> dp(nums.size(),vector<int>(target+1,-1));
-        return solution(nums.size()-1,target,nums,dp);
+        // vector<vector<int>> dp(nums.size(),vector<int>(target+1,-1));
+        // return solution(nums.size()-1,target,nums,dp);
+        vector<bool> prev(target+1,false);
+        prev[0]=true;
+        if(nums[0]<=target)
+            prev[nums[0]]=true;
+        for(int i=1;i<nums.size();++i)
+        {
+            vector<bool> curr(target+1,false);
+            curr[0]=true;
+            for(int tar=1;tar<=target;++tar)
+            {
+               bool nottake = prev[tar];
+                bool take = false;
+                if(tar>=nums[i])
+                    take = prev[tar-nums[i]];
+                curr[tar]=take||nottake;
+            }
+            prev=curr;
+        }
+        return prev[target];
     }
 };
