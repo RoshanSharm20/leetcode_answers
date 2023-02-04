@@ -28,6 +28,32 @@ public:
                     dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
             }
         }
+        string st = "";
+        for(int i=0;i<dp[text1.size()][text2.size()];++i)
+        {
+            st+='$';
+        }
+        int index = dp[text1.size()][text2.size()]-1;
+        int i = text1.size(),j=text2.size();
+        while(i>0 && j>0)
+        {
+            if(text1[i-1]==text2[j-1])
+            {
+                st[index]=text1[i-1];
+                index--;
+                i--;
+                j--;
+            }
+            else if(dp[i-1][j]>dp[i][j-1])
+            {
+                i--;
+            }
+            else
+            {
+                j--;
+            }
+        }
+        cout<<st<<endl;
         return dp[text1.size()][text2.size()];
     }
 };
