@@ -20,7 +20,21 @@ public:
         cuts.push_back(n);
         sort(cuts.begin(),cuts.end());
         int x = cuts.size();
-        vector<vector<int>> dp(x,vector<int>(x,-1));
-        return solution(1,x-2,cuts,dp);
+        vector<vector<int>> dp(x,vector<int>(x,0));
+        // return solution(1,x-2,cuts,dp);
+        for(int i=x-2;i>=1;--i)
+        {
+            for(int j=i;j<x-1;++j)
+            {
+                int mini = 1e9;
+                for(int k=i;k<=j;++k)
+                {
+                    int steps = cuts[j+1]-cuts[i-1]+dp[i][k-1]+dp[k+1][j];
+                    mini = min(mini,steps);
+                }
+                dp[i][j]=mini;
+            }
+        }
+        return dp[1][x-2];
     }
 };
