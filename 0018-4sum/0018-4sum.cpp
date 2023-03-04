@@ -1,41 +1,57 @@
 class Solution {
 public:
-    vector<vector<int>> fourSum(vector<int>& nums, int target) {
-        vector<vector<int>> ans;
-        if(nums.size()==0){
-            return ans;
-        }
-        if(abs(target)==294967296)
-            return ans;
-        int n = nums.size();
+    vector<vector<int>> fourSum(vector<int>& nums, int target) 
+    {
         sort(nums.begin(),nums.end());
-        for(int i =0;i<n;i++){
-            
-            for(int j =i+1;j<n;j++){
-                int target1 = target -nums[i]-nums[j];
-                int left = j+1;
-                int right = n-1;
-                
-                while(left<right){
-                    int sum = nums[left]+nums[right];
-                    if(sum < target1)left++;
-                    else if(sum > target1)right--;
-                    else{
-                        vector<int> q(4,0);
-                        q[0] = nums[i];
-                        q[1] = nums[j];
-                        q[2] = nums[left];
-                        q[3] = nums[right];
-                        ans.push_back(q);
-                        while(left<right && nums[left]==q[2])left++;
-                        while(left<right && nums[right]==q[3])right--; 
-                    }
-                }
-                while(j+1<n && nums[j+1]==nums[j])++j;
+        vector<vector<int>> ans;
+        if(nums.size()<4)
+            return ans;
+        long long int i = 0;
+        while(i<=nums.size()-4)
+        {
+            if(i!=0 && nums[i]==nums[i-1])
+            {
+                i++;
+                continue;
             }
-             while(i+1<n && nums[i+1]==nums[i])++i;
+            long long int target1=target-nums[i];
+            long long int j=i+1;
+            while(j<=nums.size()-3)
+            {
+                if(j!=i+1 && nums[j]==nums[j-1])
+                {
+                    j++;
+                    continue;
+                }
+                long long int target2 = target1-nums[j];
+                long long int k=j+1,l=nums.size()-1;
+                while(k<l)
+                {
+                    if(k!=j+1 && nums[k]==nums[k-1])
+                    {
+                        k++;
+                        continue;
+                    }
+                    if(nums[k]+nums[l]==target2)
+                    {
+                        vector<int> temp = {nums[i],nums[j],nums[k],nums[l]};
+                        ans.push_back(temp);
+                        k++;
+                        l--;
+                    }
+                    else if(nums[k]+nums[l]>target2)
+                    {
+                        l--;
+                    }
+                    else
+                    {
+                        k++;
+                    }  
+                }
+                j++;
+            }
+            i++;
         }
         return ans;
-
     }
 };
