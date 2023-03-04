@@ -1,57 +1,60 @@
 class Solution {
 public:
+    vector<vector<int>> two_sum(vector<int>& nums,long long int target,int start_index)
+    {
+        vector<vector<int>> ans;
+        int n = nums.size();
+        if(n-start_index<2)
+            return ans;
+        int left = start_index,right = n-1;
+        while(left<right)
+        {
+            if(left!=start_index && nums[left]==nums[left-1])
+            {
+                left++;
+                continue;
+            }
+            if(nums[left]+nums[right]==target)
+            {
+                vector<int> temp = { nums[left],nums[right]};
+                ans.push_back(temp);
+                left++;
+                right--;
+            }
+            else if(nums[left]+nums[right]>target)
+                right--;
+            else 
+                left++;
+        }
+        return ans;
+    }
+    vector<vector<int>> solution(vector<int>& nums,long long int target,int k,int start_index)
+    {
+        if(k==2)
+        {
+            return two_sum(nums,target,start_index);
+        }
+        
+        vector<vector<int>> ans;
+        int n = nums.size();
+        if(n-start_index<k)
+            return ans;
+        for(int i=start_index;i<=n-k;++i)
+        {
+            if(i!=start_index && nums[i]==nums[i-1])
+                continue;
+            vector<vector<int>> res = solution(nums,target-nums[i],k-1,i+1);
+            for(auto it:res)
+            {
+                it.push_back(nums[i]);
+                ans.push_back(it);
+            }
+        }
+        return ans;
+    }
     vector<vector<int>> fourSum(vector<int>& nums, int target) 
     {
         sort(nums.begin(),nums.end());
-        vector<vector<int>> ans;
-        if(nums.size()<4)
-            return ans;
-        long long int i = 0;
-        while(i<=nums.size()-4)
-        {
-            if(i!=0 && nums[i]==nums[i-1])
-            {
-                i++;
-                continue;
-            }
-            long long int target1=target-nums[i];
-            long long int j=i+1;
-            while(j<=nums.size()-3)
-            {
-                if(j!=i+1 && nums[j]==nums[j-1])
-                {
-                    j++;
-                    continue;
-                }
-                long long int target2 = target1-nums[j];
-                long long int k=j+1,l=nums.size()-1;
-                while(k<l)
-                {
-                    if(k!=j+1 && nums[k]==nums[k-1])
-                    {
-                        k++;
-                        continue;
-                    }
-                    if(nums[k]+nums[l]==target2)
-                    {
-                        vector<int> temp = {nums[i],nums[j],nums[k],nums[l]};
-                        ans.push_back(temp);
-                        k++;
-                        l--;
-                    }
-                    else if(nums[k]+nums[l]>target2)
-                    {
-                        l--;
-                    }
-                    else
-                    {
-                        k++;
-                    }  
-                }
-                j++;
-            }
-            i++;
-        }
-        return ans;
+        return solution(nums,target,4,0);    
     }
 };
