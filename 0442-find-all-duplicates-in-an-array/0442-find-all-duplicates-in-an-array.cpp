@@ -2,15 +2,17 @@ class Solution {
 public:
     vector<int> findDuplicates(vector<int>& nums) 
     {
-        vector<int> nodes(nums.size()+1,0);
+        map<int,int> nodes;
         for(int i=0;i<nums.size();++i)
         {
-            nodes[nums[i]]++;
+            nodes[nums[i]]+=1;
         }
         vector<int> ans;
-        for(int i=1;i<nodes.size();++i)
-            if(nodes[i]>1)
-                ans.push_back(i);
+        for(auto it:nodes)
+        {
+            if(it.second>1)
+                ans.push_back(it.first);
+        }
         return ans;
     }
 };
