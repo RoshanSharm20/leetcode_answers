@@ -4,13 +4,14 @@ public:
     {
         int n = grid.size();
         vector<vector<int>> dist(n,vector<int>(n,INT_MAX));
-        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>> nodes;
+        // priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>> nodes;
+        queue<pair<int,pair<int,int>>> nodes;
         if(grid[0][0]!=1)
             {nodes.push({1,{0,0}});
             dist[0][0]=1;}
         while(!nodes.empty())
         {
-            auto it = nodes.top();
+            auto it = nodes.front();
             nodes.pop();
             int steps = it.first;
             int row = it.second.first;
