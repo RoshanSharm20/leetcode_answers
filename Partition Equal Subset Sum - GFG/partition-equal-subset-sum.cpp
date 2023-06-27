@@ -33,8 +33,26 @@ public:
         if(total%2)
             return 0;
         int target=total/2;
-        vector<vector<int>> dp(N,vector<int>(target+1,-1));
-        return solution(N-1,target,dp,arr);
+        // vector<vector<int>> dp(N,vector<int>(target+1,-1));
+        // return solution(N-1,target,dp,arr);
+        vector<vector<int>> dp(N,vector<int>(target+1,0));
+        for(int i=0;i<N;++i)
+            dp[i][0]=true;
+        if(target>=arr[0])
+            dp[0][arr[0]]=true;
+        for(int index=1;index<N;++index)
+        {
+            for(int tar=0;tar<=target;++tar)
+            {
+                bool pick=false,notpick=false;
+                notpick = dp[index-1][tar];
+                if(tar>=arr[index])
+                    pick = dp[index-1][tar-arr[index]];
+                
+                dp[index][tar]=pick|notpick;
+            }
+        }
+        return dp[N-1][target];
     }
 };
 
